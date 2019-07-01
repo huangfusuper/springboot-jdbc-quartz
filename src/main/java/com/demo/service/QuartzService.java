@@ -46,23 +46,23 @@ public interface QuartzService {
      * 增加一个任务
      * @param taskEntity
      */
-    void addTask(TaskEntity taskEntity);
+    void addTask(TaskEntity taskEntity) throws SchedulerException;
 
     /**
      * 暂停一个任务
-     * @param taskEntity
+     * @param id
      */
-    void pauseJob(TaskEntity taskEntity);
+    void pauseJob(String id) throws SchedulerException;
 
     /**
      * 恢复暂停的任务
-     * @param taskEntity
+     * @param id
      */
-    void resumeJob(TaskEntity taskEntity);
+    void resumeJob(String id) throws SchedulerException;
 
     /**
      * 立即开始执行
-     * @param taskEntity
+     * @param id
      */
-    void runAJobNow(TaskEntity taskEntity);
+    void runAJobNow(String id) throws SchedulerException;
 }

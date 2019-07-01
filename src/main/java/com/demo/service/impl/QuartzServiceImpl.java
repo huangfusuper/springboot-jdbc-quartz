@@ -1,5 +1,6 @@
 package com.demo.service.impl;
 
+import com.demo.conf.TaskObject;
 import com.demo.dao.TaskDao;
 import com.demo.dataobject.TaskEntity;
 import com.demo.service.QuartzService;
@@ -118,22 +119,77 @@ public class QuartzServiceImpl implements QuartzService {
     }
 
     @Override
-    public void addTask(TaskEntity taskEntity) {
-
+    public void addTask(TaskEntity job) throws SchedulerException {
+        if(job == null || TaskEntity.STATUS_RUNNING.equals(job.getJobStatus())){
+            return;
+        }
+        //创建任务信息
+        TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
+        //创建一个触发器
+        CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+        //查看此触发器是否存在  有可能存在  因为启动任务也调用了这个方法
+        if(null == cronTrigger){
+            //如果不存在  开始创建一个定时任务
+            JobDetail jobDetail = JobBuilder.newJob(TaskObject.class)
+                    .withIdentity(job.getJobName(), job.getJobGroup())
+                    .build();
+            //将任务对对象产地给任务工厂 生产任务
+            jobDetail.getJobDataMap().put("job",job);
+            //创建一个定时器
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+            //创建新的触发器
+            cronTrigger = TriggerBuilder.newTrigger()
+                    .withSchedule(scheduleBuilder)
+                    .withIdentity(job.getJobName(), job.getJobGroup())
+                    .build();
+            //绑定触发器和任务详情
+            scheduler.scheduleJob(jobDetail,cronTrigger);
+        }else{
+            // Trigger已存在，那么更新相应的定时设置
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+            //修改触发器
+            cronTrigger = cronTrigger.getTriggerBuilder()
+                    .withIdentity(triggerKey)
+                    .withSchedule(scheduleBuilder)
+                    .build();
+            //按照新的运行
+            scheduler.rescheduleJob(triggerKey,cronTrigger);
+        }
     }
 
+    /**
+     * 暂停一个任务
+     * @param id
+     */
     @Override
-    public void pauseJob(TaskEntity taskEntity) {
-
+    public void pauseJob(String id) throws SchedulerException {
+        TaskEntity job = findOneById(id);
+        //获取任务详细  key
+        JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
+        //暂停
+        scheduler.pauseJob(jobKey);
     }
 
+    /**
+     * 开始任务  恢复暂停
+     */
     @Override
-    public void resumeJob(TaskEntity taskEntity) {
-
+    public void resumeJob(String id) throws SchedulerException {
+        TaskEntity job = findOneById(id);
+        //获取任务详细  key
+        JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
+        scheduler.resumeJob(jobKey);
     }
 
+    /**
+     * 不等待  立即执行该任务
+     * @param id
+     */
     @Override
-    public void runAJobNow(TaskEntity taskEntity) {
-
+    public void runAJobNow(String id) throws SchedulerException {
+        TaskEntity job = findOneById(id);
+        //获取任务详细  key
+        JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
+        scheduler.triggerJob(jobKey);
     }
 }

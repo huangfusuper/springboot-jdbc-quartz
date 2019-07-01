@@ -2,6 +2,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     jackson:
       default-property-inclusion: non_null
@@ -14,9 +15,9 @@ spring:
     #调整页面路径
     prefix: classpath:/templates/
   datasource:
-    url: jdbc:mysql://localhost:3306/quartz?serverTimezone=GMT&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    url: jdbc:mysql://101.132.168.240:3306/quartz?serverTimezone=GMT&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: hr
+    password: HUANGfu0110..
     #driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
