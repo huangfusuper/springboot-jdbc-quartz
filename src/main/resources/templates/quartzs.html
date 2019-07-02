@@ -16,7 +16,8 @@
             border: 1px solid black;
         }
     </style>
-    <!--<script type="text/javascript" src="../../static/jquery/jquery-3.3.1.js" th:src="@{/jquery/jquery-3.3.1.js}"></script>-->
+    <script type="text/javascript" src="../static/jquery/jquery-3.3.1.js" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" src="../static/index.js" th:src="@{/index.js}"></script>
 </head>
 <body>
     <div style="align-content: center">
@@ -47,7 +48,12 @@
                     <td th:text="${job.cronExpression}"></td>
                     <td th:text="${job.createTime}"></td>
                     <td th:text="${job.updateTime}"></td>
-                    <td><a href="#">开始</a> <a href="#">暂停</a> <a href="#">删除</a></td>
+                    <td><a onclick="start(this);" id="start" href="#">开始</a>
+                        <a onclick="stop(this);" id="stop" href="#">停止</a>
+                        <a onclick="pause(this);" id="pause" href="#">暂停</a>
+                        <a onclick="ref(this)" id="ref" href="#">恢复</a>
+                    </td>
+
                 </tr>
             </tbody>
         </table>
