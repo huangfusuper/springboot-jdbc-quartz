@@ -44,9 +44,9 @@ public interface QuartzService {
 
     /**
      * 增加一个任务
-     * @param taskEntity
+     * @param id
      */
-    void addTask(TaskEntity taskEntity) throws SchedulerException;
+    void addTask(String id) throws SchedulerException;
 
     /**
      * 暂停一个任务

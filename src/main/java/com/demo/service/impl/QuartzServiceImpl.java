@@ -119,7 +119,8 @@ public class QuartzServiceImpl implements QuartzService {
     }
 
     @Override
-    public void addTask(TaskEntity job) throws SchedulerException {
+    public void addTask(String id) throws SchedulerException {
+        TaskEntity job = findOneById(id);
         if(job == null || TaskEntity.STATUS_RUNNING.equals(job.getJobStatus())){
             return;
         }
@@ -155,6 +156,8 @@ public class QuartzServiceImpl implements QuartzService {
             //按照新的运行
             scheduler.rescheduleJob(triggerKey,cronTrigger);
         }
+        job.setJobStatus(TaskEntity.STATUS_RUNNING);
+        taskDao.save(job);
     }
 
     /**
