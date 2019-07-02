@@ -27,6 +27,11 @@ public class JobController {
         modelAndView.setViewName("/quartzs");
         return modelAndView;
     }
+    @RequestMapping("/addJob.html")
+    public ModelAndView addView(ModelAndView modelAndView){
+        modelAndView.setViewName("/addJob");
+        return modelAndView;
+    }
 
     /**
      * 添加一个任务

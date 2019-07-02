@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author 皇甫
@@ -41,6 +42,9 @@ public class QuartzServiceImpl implements QuartzService {
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     @Override
     public void addJob(TaskEntity taskEntity) {
+        taskEntity.setJobId(UUID.randomUUID().toString());
+        taskEntity.preCreate();
+        taskEntity.setJobStatus(TaskEntity.STATUS_NOT_RUNNING);
         taskDao.save(taskEntity);
     }
 

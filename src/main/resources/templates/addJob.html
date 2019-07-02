@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>添加任务</title>
+    <script type="text/javascript" src="../static/jquery/jquery-3.3.1.js" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" src="../static/index.js" th:src="@{/index.js}"></script>
 </head>
 <body>
-$END$
+    <form id="form" method="post">
+        任务名称：<input id="jobName" name="jobName" type="text"/><br/>
+        任务分组：<input id="jobGroup" name="jobGroup" type="text"/><br/>
+        cron周期：<input id="cronExpression" name="cronExpression" type="text"/><br/>
+        全限定名：<input id="runJobClassName" name="runJobClassName" type="text"/><br/>
+        方法名：<input id="runJobMethodName" name="runJobMethodName" type="text"/><br/>
+        任务详细描述：<input id="description" name="description" type="text"/><br/>
+
+        <button id="addJob">添加</button>
+    </form>
 </body>
 </html>
