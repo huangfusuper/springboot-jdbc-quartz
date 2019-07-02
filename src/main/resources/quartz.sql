@@ -4,7 +4,7 @@ Source Host: 101.132.168.240
 Source Database: quartz
 Target Host: 101.132.168.240
 Target Database: quartz
-Date: 2019/7/2 10:45:28
+Date: 2019/7/2 15:13:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -211,4 +211,5 @@ CREATE TABLE `task_entity` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `task_entity` VALUES ('94478e54-6af0-4733-8813-261dac82098a', '2019-07-02 01:04:36', '0/2 * * * * ?', null, null, '123', '123', '1', 'com.demo.job.PrintHelloWordJob', 'print', null);
+INSERT INTO `task_entity` VALUES ('3156700f-492a-4506-9d8f-f63387d6826c', '2019-07-01 15:13:37', '0/2 * * * * ?', '打印东西', null, 'print', '打印hello', '1', 'com.demo.job.PrintHelloWordJob	', 'print', null);
+INSERT INTO `task_entity` VALUES ('39d1a330-1c86-490c-8b13-45d81f17ada1', '2019-07-02 07:10:45', '0/1 * * * * ?', '打印随机字符串', null, 'print', '打印随机字符串', '1', 'com.demo.job.UUIDPrintJob', 'print', null);
