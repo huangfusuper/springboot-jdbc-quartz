@@ -15,6 +15,10 @@ public class QuartzConfig {
     @Autowired
     private JobFactory jobFactory;
 
+    /**
+     * 指定持久化配置文件
+     * @return
+     */
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(){
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
@@ -26,6 +30,10 @@ public class QuartzConfig {
         return schedulerFactoryBean;
     }
 
+    /**
+     * 创建getScheduler
+     * @return
+     */
     @Bean
     public Scheduler scheduler(){
         return schedulerFactoryBean().getScheduler();

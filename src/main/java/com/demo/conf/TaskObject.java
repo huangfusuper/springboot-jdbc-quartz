@@ -8,6 +8,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
+ * 任务对象  我们需要通过此方法来反射执行任务类
  * @author 皇甫
  */
 @DisallowConcurrentExecution
