@@ -51,6 +51,7 @@ public class JobTest {
             System.out.println(result.get("title"));
             System.out.println(result.get("createByName"));
             System.out.println(result.get("createDate"));
+            
         }
     }
 }
